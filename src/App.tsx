@@ -43,6 +43,7 @@ function App() {
     },
     {
       field: "note",
+      editable: true,
       resizable: true,
       suppressMovable: true,
     },
