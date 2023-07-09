@@ -9,7 +9,7 @@ import { ColDef } from "ag-grid-community/dist/lib/entities/colDef";
 function App() {
   const peopleStore = usePeopleStore();
 
-  const [columnDefs] = useState<ColDef<typeof peopleStore.people[number]>[]>([
+  const [columnDefs] = useState<ColDef<(typeof peopleStore.people)[number]>[]>([
     {
       field: "name",
       pinned: "left",
@@ -35,7 +35,17 @@ function App() {
       field: "availability",
       resizable: true,
       suppressMovable: true,
-    }
+    },
+    {
+      field: "avail",
+      resizable: true,
+      suppressMovable: true,
+    },
+    {
+      field: "note",
+      resizable: true,
+      suppressMovable: true,
+    },
   ]);
 
   const defaultColDef = useMemo(

@@ -27,4 +27,30 @@ export interface Person {
   availability: number;
   capacity_hours: number;
   employment_status: number;
+  avail: string; // todo
+  note: string
+}
+
+
+export interface Developer {
+  uuid: string;
+  note: string;
+  display_name?: string;
+  position?: string;
+  seniority?: string;
+}
+
+export interface Seniority {
+  uuid: string;
+  text: string;
+  level: number;
+}
+
+export interface MutatedDevelopers extends Omit<Developer, 'uuid' | 'note'> {
+  avail?: string;
+}
+
+export interface DevelopersResponse {
+  results?: Developer[];
+  count: number;
 }

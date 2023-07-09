@@ -1,7 +1,7 @@
 const secondaryTableSelector = ".reports-availability-table";
 
 export function watchIfTableIsMounted(
-  callback: (table: Element) => () => void,
+  callback: (table: HTMLElement) => () => void,
 ) {
   let tableExists = false;
   let unmount: () => void;

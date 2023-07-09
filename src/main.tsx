@@ -12,14 +12,17 @@ observeRequests(
 
 window.addEventListener("snapshot-updated", (e) => {
   if ("detail" in e) {
+    //todo
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     snapshotDataListener(e.detail as string)
-      .then((data) =>
+      .then((data) => {
         data
           ? setState({
               people: data,
             })
-          : null,
-      )
+          : null;
+      })
       .catch(console.error);
   }
 });
