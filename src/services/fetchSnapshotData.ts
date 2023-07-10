@@ -1,6 +1,13 @@
 import axios from "axios";
-import { Developer, DevelopersResponse, SnapshotResponse } from "../types.ts";
+import {
+  Developer,
+  DevelopersResponse,
+  Seniority,
+  SnapshotResponse,
+} from "../types.ts";
 
+// todo to rewrite
+const host = window.location.host;
 export async function fetchSnapshotData(url: string) {
   const data = await axios.get<SnapshotResponse>(url);
 
@@ -10,7 +17,6 @@ export async function fetchSnapshotData(url: string) {
 }
 
 export async function getDevelopers(): Promise<Developer[]> {
-  const host = window.location.host;
   const page = 75;
   const pageSize = 75;
 
@@ -31,4 +37,10 @@ export async function getDevelopers(): Promise<Developer[]> {
   const results = await Promise.all(promises);
 
   return results.flatMap((result) => result.data.results) as Developer[];
+}
+
+export async function getSeniorities(): Promise<Seniority[]> {
+  const data = await axios.get(`https://${host}/api/company/seniorities`);
+
+  return data.data as Seniority[];
 }

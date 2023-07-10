@@ -23,7 +23,6 @@ export async function enrichDataWithPeople(people: Person[]) {
     }
     return person;
   });
-  console.log("-> enrichedPeople", enrichedPeople);
 
   return enrichedPeople;
 }

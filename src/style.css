@@ -1,0 +1,10 @@
+.additional-content-section{
+    position: absolute;
+    height: 38px;
+    width: 115px;
+    z-index: 10;
+    top: -50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
