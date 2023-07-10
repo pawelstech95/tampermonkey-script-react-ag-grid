@@ -1,4 +1,4 @@
-const secondaryTableSelector = ".reports-availability-table";
+const secondaryTableSelector = ".reports-availability-table__table";
 
 export function watchIfTableIsMounted(
   callback: (table: HTMLElement) => () => void,

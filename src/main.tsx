@@ -5,9 +5,10 @@ import { watchIfTableIsMounted } from "./services/domObserver.ts";
 import { observeRequests } from "./services/requestsObserver.ts";
 import { snapshotDataListener } from "./services/appData.ts";
 import { setState } from "./store/people.ts";
+import { createReportsExportXlsx } from "./elements/data-header-ui";
 
 observeRequests(
-  new RegExp(`https://(.*)primetric.com/api/myHub/reports/snapshots/(.+)`),
+  new RegExp(`https://(.*)primetric.com/api/myHub/reports/snapshots/(.+)`), //todo
 );
 
 window.addEventListener("snapshot-updated", (e) => {
@@ -28,6 +29,10 @@ window.addEventListener("snapshot-updated", (e) => {
 });
 
 watchIfTableIsMounted((table) => {
+  console.log("-> The Tampermonkey script has been loaded");
+
+  createReportsExportXlsx();
+
   const rootDiv = document.createElement("div");
   table.innerHTML = "";
   table.appendChild(rootDiv);

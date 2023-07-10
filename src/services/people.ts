@@ -1,5 +1,6 @@
 import { Developer, Person } from "../types.ts";
 import { getDevelopers } from "./fetchSnapshotData";
+import { getFittedChart } from "../utils";
 
 export async function enrichDataWithPeople(people: Person[]) {
   const developers = await getDevelopers();
@@ -14,7 +15,11 @@ export async function enrichDataWithPeople(people: Person[]) {
 
     if (developer) {
       const { note } = developer;
-      return { ...person, note };
+
+      const fittedChart = getFittedChart(developer) || "-";
+
+      const parsedNote = note.replace(`[${fittedChart}]`, "");
+      return { ...person, avail: fittedChart, note: parsedNote };
     }
     return person;
   });
