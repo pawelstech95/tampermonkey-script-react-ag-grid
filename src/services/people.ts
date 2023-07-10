@@ -1,5 +1,5 @@
 import { Developer, Person } from "../types.ts";
-import { getDevelopers } from "./fetchSnapshotData";
+import { getDevelopers } from "./fetchData";
 import { getFittedChart } from "../utils";
 
 export async function enrichDataWithPeople(people: Person[]) {

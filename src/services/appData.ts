@@ -1,4 +1,4 @@
-import { fetchSnapshotData } from "./fetchSnapshotData.ts";
+import { fetchSnapshotData } from "./fetchData.ts";
 import { enrichDataWithPeople } from "./people.ts";
 
 export async function snapshotDataListener(url: string) {
