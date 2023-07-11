@@ -5,9 +5,11 @@ import {
   Seniority,
   SnapshotResponse,
 } from "../types.ts";
+import { getCookie } from "../utils";
 
 // todo to rewrite
 const host = window.location.host;
+
 export async function fetchSnapshotData(url: string) {
   const data = await axios.get<SnapshotResponse>(url);
 
@@ -17,7 +19,7 @@ export async function fetchSnapshotData(url: string) {
 }
 
 export async function getDevelopers(): Promise<Developer[]> {
-  const page = 75;
+  const page = 1;
   const pageSize = 75;
 
   const { data } = await axios.get<DevelopersResponse>(
@@ -43,4 +45,16 @@ export async function getSeniorities(): Promise<Seniority[]> {
   const data = await axios.get(`https://${host}/api/company/seniorities`);
 
   return data.data as Seniority[];
+}
+
+export async function updateDeveloperNotes(uuid: string, note: string) {
+  await fetch(`https://${host}/api/employees_profiles/${uuid}/`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      "x-csrftoken": getCookie("csrftoken"),
+    },
+    body: JSON.stringify({ note }),
+  }); // todo axios
+  await getDevelopers();
 }

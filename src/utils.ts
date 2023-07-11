@@ -12,8 +12,14 @@ export function getFittedChart(employee: Developer | Person) {
   );
 }
 
-// export function getCookie(name: string): string {
-//   const value = `; ${document.cookie}`;
-//   const parts = value.split(`; ${name}=`);
-//   if (parts.length === 2) return parts.pop().split(';').shift();
-// }
+export function getCookie(name: string): string {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) {
+    const cookieValue = parts.pop()?.split(";").shift();
+    if (cookieValue) {
+      return cookieValue;
+    }
+  }
+  throw new Error(`Cookie with name '${name}' not found.`);
+}

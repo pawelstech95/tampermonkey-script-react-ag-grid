@@ -1,13 +1,30 @@
 import { AgGridReact } from "ag-grid-react";
+import { ColDef } from "ag-grid-community/dist/lib/entities/colDef";
+import { CellValueChangedEvent } from "ag-grid-community";
 import usePeopleStore from "../store/people";
 import { useEffect, useMemo, useState } from "react";
-import { getDevelopers, getSeniorities } from "../services/fetchData";
+import {
+  getDevelopers,
+  getSeniorities,
+  updateDeveloperNotes,
+} from "../services/fetchData";
 import { setState as setDeveloperState } from "../store/developers";
 import { setState as setSenioritisState } from "../store/seniority";
-import { ColDef } from "ag-grid-community/dist/lib/entities/colDef";
+
+import { Person } from "../types";
 export const AgGrid = () => {
   const host = window.location.host;
+  const body = document.body;
+  const theme = body.getAttribute("theme");
+  const refreshButton = document.querySelector(
+    ".reports-top-bar__refresh-button",
+  ) as HTMLButtonElement;
+  const switchButton = document.querySelector(
+    ".custom-control.custom-switch",
+  ) as HTMLInputElement;
+
   const peopleStore = usePeopleStore();
+  const [isDarkMode, setIsDarkMode] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,10 +43,19 @@ export const AgGrid = () => {
     fetchData(); //todo
   }, []);
 
+  useEffect(() => {
+    switchButton.addEventListener("click", () => refreshButton.click());
+    if (theme === "dark") {
+      setIsDarkMode(true);
+    } else {
+      setIsDarkMode(false);
+    }
+  }, [refreshButton, switchButton, theme]);
+
   const [columnDefs] = useState<ColDef<(typeof peopleStore.people)[number]>[]>([
     {
       field: "name",
-
+      cellClass: "ag-grid-name-field",
       onCellClicked: (params) => {
         if (params.data?.uuid) {
           const url = `https://${host}/developer/${params.data.uuid}/calendar`;
@@ -37,63 +63,60 @@ export const AgGrid = () => {
         }
       },
       pinned: "left",
-      filter: true,
-      resizable: true,
-      suppressMovable: true,
     },
     {
       field: "position",
-      filter: true,
-      resizable: true,
-      suppressMovable: true,
     },
     {
       field: "department",
-      filter: true,
-      resizable: true,
-      suppressMovable: true,
     },
     {
       field: "seniority",
       filter: true,
       resizable: true,
-      suppressMovable: true,
     },
     {
       field: "availability",
-      filter: true,
-      resizable: true,
-      suppressMovable: true,
     },
     {
       field: "avail",
-      filter: true,
-      resizable: true,
-      suppressMovable: true,
     },
     {
       field: "note",
-      filter: true,
       editable: true,
-      resizable: true,
-      suppressMovable: true,
       autoHeight: true,
+      suppressAutoSize: true,
+      initialWidth: 600,
+      wrapText: true,
     },
   ]);
 
-  const defaultColDef = useMemo(
+  const defaultColDef: ColDef = useMemo(
     () => ({
+      onCellValueChanged: () => console.log("value had been changed"),
+      filter: true,
+      resizable: true,
       sortable: true,
+      suppressMovable: true,
       floatingFilter: false,
     }),
     [],
   );
   return (
-    <div className="ag-theme-alpine" style={{ height: 700 }}>
+    <div
+      className={`ag-theme-alpine${isDarkMode ? " ag-theme-alpine-dark" : ""}`}
+    >
       <AgGridReact
         rowData={peopleStore.people}
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
+        animateRows
+        onCellValueChanged={(
+          { data }: CellValueChangedEvent<Person>, // todo
+        ) => {
+          updateDeveloperNotes(data.uuid, data.note);
+          refreshButton && refreshButton.click();
+        }}
       />
     </div>
   );

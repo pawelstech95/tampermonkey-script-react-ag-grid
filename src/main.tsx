@@ -33,9 +33,6 @@ watchIfTableIsMounted((table) => {
   const rootDiv = document.createElement("div");
   table.innerHTML = "";
   table.appendChild(rootDiv);
-  table.style.paddingTop = "0px";
-  table.style.paddingBottom = "0px";
-  table.classList.remove("pt-2");
 
   ReactDOM.createRoot(rootDiv).render(
     <React.StrictMode>
