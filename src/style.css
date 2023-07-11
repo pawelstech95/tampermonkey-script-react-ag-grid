@@ -1,10 +1,26 @@
-.additional-content-section{
-    position: absolute;
-    height: 38px;
-    width: 115px;
-    z-index: 10;
-    top: -50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.reports-availability-table__table {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.additional-content-section {
+  position: absolute;
+  height: 38px;
+  width: 115px;
+  z-index: 10;
+  top: -50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.ag-theme-alpine {
+  height: 700px;
+}
+.ag-theme-alpine-dark {
+  --ag-foreground-color: #fff;
+  --ag-background-color: #151b29;
+  --ag-header-foreground-color: #fff;
+  --ag-header-background-color: #1f2b39;
+  --ag-odd-row-background-color: #1f2b39 !important;
+  --ag-header-column-resize-handle-color: rgba(18, 182, 202, 0.2);
 }
