@@ -8,10 +8,12 @@ import {
   getSeniorities,
   updateDeveloperNotes,
 } from "../services/fetchData";
+import { marked } from "marked";
 import { setState as setDeveloperState } from "../store/developers";
 import { setState as setSenioritisState } from "../store/seniority";
 
 import { Person } from "../types";
+
 export const AgGrid = () => {
   const host = window.location.host;
   const body = document.body;
@@ -44,17 +46,20 @@ export const AgGrid = () => {
   }, []);
 
   useEffect(() => {
-    switchButton.addEventListener("click", () => refreshButton.click());
     if (theme === "dark") {
       setIsDarkMode(true);
     } else {
       setIsDarkMode(false);
     }
+    switchButton.addEventListener("click", () => refreshButton.click());
   }, [refreshButton, switchButton, theme]);
 
   const [columnDefs] = useState<ColDef<(typeof peopleStore.people)[number]>[]>([
     {
       field: "name",
+      valueFormatter: (params) => {
+        return (params.node && params.node.id) + " " + params.value;
+      }, // todo to remove
       cellClass: "ag-grid-name-field",
       onCellClicked: (params) => {
         if (params.data?.uuid) {
@@ -72,8 +77,6 @@ export const AgGrid = () => {
     },
     {
       field: "seniority",
-      filter: true,
-      resizable: true,
     },
     {
       field: "availability",
@@ -83,6 +86,20 @@ export const AgGrid = () => {
     },
     {
       field: "note",
+      cellRendererSelector: (params) => {
+        const noteContent = params.value as string;
+        const markdownContent = marked.parse(noteContent);
+
+        const noteDetails = {
+          component: () => (
+            <span dangerouslySetInnerHTML={{ __html: markdownContent }} />
+          ),
+        };
+        if (params.data) {
+          if (params.data.note) return noteDetails;
+        }
+        return undefined;
+      },
       editable: true,
       autoHeight: true,
       suppressAutoSize: true,
@@ -93,7 +110,6 @@ export const AgGrid = () => {
 
   const defaultColDef: ColDef = useMemo(
     () => ({
-      onCellValueChanged: () => console.log("value had been changed"),
       filter: true,
       resizable: true,
       sortable: true,

@@ -28,9 +28,8 @@ export interface Person {
   capacity_hours: number;
   employment_status: number;
   avail: string; // todo
-  note: string
+  note: string;
 }
-
 
 export interface Developer {
   uuid: string;
@@ -46,7 +45,7 @@ export interface Seniority {
   level: number;
 }
 
-export interface MutatedDevelopers extends Omit<Developer, 'uuid' | 'note'> {
+export interface MutatedDevelopers extends Omit<Developer, "uuid" | "note"> {
   avail?: string;
 }
 
