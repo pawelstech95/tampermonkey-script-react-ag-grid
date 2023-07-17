@@ -19,7 +19,12 @@ export async function enrichDataWithPeople(people: Person[]) {
       const fittedChart = getFittedChart(developer) || "-";
 
       const parsedNote = note.replace(`[${fittedChart}]`, "");
-      return { ...person, avail: fittedChart, note: parsedNote };
+      return {
+        ...person,
+        avail: fittedChart,
+        note: note,
+        parsedNote: parsedNote,
+      };
     }
     return person;
   });

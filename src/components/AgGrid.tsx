@@ -94,7 +94,7 @@ export const AgGrid = () => {
     {
       field: "note",
       cellRendererSelector: (params) => {
-        const noteContent = params.value as string;
+        const noteContent = params.data?.parsedNote as string;
         const markdownContent = marked.parse(noteContent);
 
         const noteDetails = {
@@ -103,7 +103,7 @@ export const AgGrid = () => {
           ),
         };
         if (params.data) {
-          if (params.data.note) return noteDetails;
+          if (params.data.parsedNote) return noteDetails;
         }
         return undefined;
       },
