@@ -25,6 +25,14 @@ export const AgGrid = () => {
     ".custom-control.custom-switch",
   ) as HTMLInputElement;
 
+  const buttons = document.querySelectorAll("button");
+  const resetButton = Array.from(buttons).find(
+    (button) => button.textContent === "Reset table",
+  ) as HTMLButtonElement;
+
+  resetButton.addEventListener("click", () => refreshButton.click());
+  switchButton.addEventListener("click", () => refreshButton.click());
+
   const peopleStore = usePeopleStore();
   const [isDarkMode, setIsDarkMode] = useState(false);
 
@@ -51,8 +59,7 @@ export const AgGrid = () => {
     } else {
       setIsDarkMode(false);
     }
-    switchButton.addEventListener("click", () => refreshButton.click());
-  }, [refreshButton, switchButton, theme]);
+  }, [theme]);
 
   const [columnDefs] = useState<ColDef<(typeof peopleStore.people)[number]>[]>([
     {
@@ -101,6 +108,12 @@ export const AgGrid = () => {
         return undefined;
       },
       editable: true,
+      cellEditor: "agLargeTextCellEditor",
+      cellEditorParams: {
+        maxLength: 2000,
+        rows: 20,
+        cols: 70,
+      },
       autoHeight: true,
       suppressAutoSize: true,
       initialWidth: 600,

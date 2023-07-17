@@ -34,6 +34,13 @@ watchIfTableIsMounted((table) => {
   table.innerHTML = "";
   table.appendChild(rootDiv);
 
+  const paginationElements = document.querySelectorAll(
+    ".reports-availability-table .pri-paginator",
+  );
+
+  if (paginationElements)
+    paginationElements.forEach((element) => (element.innerHTML = ""));
+
   ReactDOM.createRoot(rootDiv).render(
     <React.StrictMode>
       <App />
