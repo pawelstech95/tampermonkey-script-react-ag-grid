@@ -7,12 +7,11 @@ import { snapshotDataListener } from "./services/appData.ts";
 import { setState } from "./store/people.ts";
 
 observeRequests(
-  new RegExp(`https://(.*)primetric.com/api/myHub/reports/snapshots/(.+)`), //todo
+  new RegExp(`https://(.*)primetric.com/api/myHub/reports/snapshots/(.+)`),
 );
 
 window.addEventListener("snapshot-updated", (e) => {
   if ("detail" in e) {
-    //todo
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     snapshotDataListener(e.detail as string)

@@ -27,7 +27,7 @@ export interface Person {
   availability: number;
   capacity_hours: number;
   employment_status: number;
-  avail: string; // todo
+  avail: string;
   parsedNote: string;
   note: string;
 }

@@ -6,10 +6,6 @@ import ReportsExportToXlsx from "./components/ReportsExportToXlsx";
 
 import "./style.css";
 
-//todo zmienic developers
-//todo markdown
-//todo zmienic seniorities
-//todo dodać edycję na avail
 function App() {
   return (
     <>

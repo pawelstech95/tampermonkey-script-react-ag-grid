@@ -50,7 +50,7 @@ export const AgGrid = () => {
       }
     };
 
-    fetchData(); //todo
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -140,9 +140,7 @@ export const AgGrid = () => {
         columnDefs={columnDefs}
         defaultColDef={defaultColDef}
         animateRows
-        onCellValueChanged={(
-          { data }: CellValueChangedEvent<Person>, // todo
-        ) => {
+        onCellValueChanged={({ data }: CellValueChangedEvent<Person>) => {
           updateDeveloperNotes(data.uuid, data.note);
           refreshButton && refreshButton.click();
         }}

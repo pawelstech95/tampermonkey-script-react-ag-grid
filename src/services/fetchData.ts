@@ -7,7 +7,6 @@ import {
 } from "../types.ts";
 import { getCookie } from "../utils";
 
-// todo to rewrite
 const host = window.location.host;
 
 export async function fetchSnapshotData(url: string) {
@@ -48,13 +47,22 @@ export async function getSeniorities(): Promise<Seniority[]> {
 }
 
 export async function updateDeveloperNotes(uuid: string, note: string) {
-  await fetch(`https://${host}/api/employees_profiles/${uuid}/`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-      "x-csrftoken": getCookie("csrftoken"),
-    },
-    body: JSON.stringify({ note }),
-  }); // todo axios
-  await getDevelopers();
+  try {
+    await axios.patch(
+      `https://${host}/api/employees_profiles/${uuid}/`,
+      {
+        note,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          "x-csrftoken": getCookie("csrftoken"),
+        },
+      },
+    );
+
+    await getDevelopers();
+  } catch (error) {
+    console.error("An error occurred while updating developer notes:", error);
+  }
 }
