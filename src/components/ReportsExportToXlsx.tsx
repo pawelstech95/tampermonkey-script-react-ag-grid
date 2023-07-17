@@ -13,7 +13,7 @@ const ReportsExportToXlsx = () => {
 
   const onlyBenchPeopleObjectToExport = onlyBenchPeople.map((person) => {
     const fittedSeniority = seniorityStore.senioritis.find(
-      (seniority) => seniority.uuid === person.seniority,
+      (seniority) => seniority.text === person.seniority,
     );
 
     const re = /^([A-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]+[\dA-Za-zęóąśłżźćńĘÓĄŚŁŻŹĆŃ]*)/;
@@ -27,7 +27,6 @@ const ReportsExportToXlsx = () => {
     };
   });
 
-  // todo
   const handleExport = React.useCallback(() => {
     const wb = XLSX.utils.book_new();
     const ws = XLSX.utils.json_to_sheet(onlyBenchPeopleObjectToExport);

@@ -11,7 +11,7 @@ export async function enrichDataWithPeople(people: Person[]) {
   });
 
   const enrichedPeople = people.map((person) => {
-    const developer = developersMap.get(person.uuid); // Type assertion to Person or undefined
+    const developer = developersMap.get(person.uuid);
 
     if (developer) {
       const { note } = developer;
